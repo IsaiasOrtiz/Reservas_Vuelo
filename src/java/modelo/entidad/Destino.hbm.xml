@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 09-oct-2019 7:45:06 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="modelo.entidad.Destino" table="destino" catalog="reservas" optimistic-lock="version">
+        <id name="idDestino" type="java.lang.Integer">
+            <column name="id_destino" />
+            <generator class="identity" />
+        </id>
+        <property name="pais" type="string">
+            <column name="pais" length="45" />
+        </property>
+        <property name="ciudad" type="string">
+            <column name="ciudad" length="45" />
+        </property>
+        <property name="aeropuerto" type="string">
+            <column name="aeropuerto" length="45" />
+        </property>
+        <set name="vuelos" table="vuelo" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_destino" />
+            </key>
+            <one-to-many class="modelo.entidad.Vuelo" />
+        </set>
+    </class>
+</hibernate-mapping>

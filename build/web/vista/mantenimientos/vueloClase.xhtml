@@ -1,0 +1,138 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../../plantilla/plantilla.xhtml">
+
+            <ui:define name="content">
+                <h3>LISTADO DE CLASES DE LOS VUELOS</h3>
+                    <h:form>
+                        <p:commandButton value="Agregar VueloClase" actionListener="#{vueloClaseControl.limpiarVueloClase()}" oncomplete="PF('dialogoAgregar').show();" update=":formAgregar"/>
+                        <p:separator/>
+                    </h:form>
+                    <h:form id="formListado">
+                        <p:dataTable id="tablaVueloClases" paginator="true" paginatorPosition="bottom" rows="10" var="vueloClase" value="#{vueloClaseControl.listaVueloClases}" emptyMessage="No existen vueloClases">
+                            <p:column headerText="Id:">
+                                <h:outputText value="#{vueloClase.idVueloClase}" />
+                            </p:column>
+                            <p:column headerText="ID de vuelo:">
+                                <h:outputText value="#{vueloClase.vuelo.idVuelo}" />
+                            </p:column>
+                            <p:column headerText="Id de clase:">
+                                <h:outputText value="#{vueloClase.clase.idClase}" />
+                            </p:column>
+                            
+                            <p:column headerText="Numero de asientos:">
+                                <h:outputText value="#{vueloClase.numeroAsientos}" />
+                            </p:column>
+                            <p:column headerText="Precio:">
+                                <h:outputText value="#{vueloClase.precio}" />
+                            </p:column>
+                            <p:column headerText="Precio Comida:">
+                                <h:outputText value="#{vueloClase.precioComida}" />
+                            </p:column>
+                            <p:column headerText="Fecha Creacion:">
+                                <h:outputText value="#{vueloClase.fechaCreacion}" />
+                            </p:column>
+                            <p:column headerText="MODIFICAR" style="text-align: center">
+                                <p:commandButton icon="ui-icon-pencil" title="Modificar" oncomplete="PF('dialogoModificar').show();" update=":formModificar">
+                                    <f:setPropertyActionListener target="#{vueloClaseControl.vueloClase}" value="#{vueloClase}"/>
+                                </p:commandButton>
+                            </p:column>
+                            <p:column headerText="ELIMINAR" style="text-align: center">
+                                <p:commandButton icon="ui-icon-trash" title="Eliminar" oncomplete="PF('dialogoEliminar').show();" update=":formEliminar">
+                                    <f:setPropertyActionListener target="#{vueloClaseControl.vueloClase}" value="#{vueloClase}"/>
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+
+                    <h:form id="formAgregar">
+                        <p:dialog id="dlgAgregar" header="Agregar VueloClase" widgetVar="dialogoAgregar" resizable="false" showEffect="fade" hideEffect="explode" modal="true">
+                            <p:panelGrid columns="2" style="margin: 0 auto;">       
+                                
+                    
+                                <p:outputLabel value="id vuelo:"/>
+                                <p:selectOneMenu value="#{vueloClaseControl.vueloClase.vuelo.idVuelo}">
+                                    <f:selectItem itemLabel="-- Seleccione -- "/>
+                                    <f:selectItems value="#{vueloClaseControl.listaVuelo}"/>
+                                </p:selectOneMenu>
+                                
+                                 <p:outputLabel value="Clase:"/>
+                                 <p:selectOneMenu value="#{vueloClaseControl.vueloClase.clase.idClase}">
+                                    <f:selectItem itemLabel="-- Seleccione -- "/>
+                                    <f:selectItems value="#{vueloClaseControl.listaClases}"/>
+                                </p:selectOneMenu>
+                                  <p:outputLabel value="Numero de asientos:"/>
+                                  <p:inputText value="#{vueloClaseControl.vueloClase.numeroAsientos}"/>
+                                  <p:outputLabel value="Precio:"/>
+                                  <p:inputText value="#{vueloClaseControl.vueloClase.precio}"/>
+                                  <p:outputLabel value="Precio comida:"/>
+                                  <p:inputText value="#{vueloClaseControl.vueloClase.precioComida}"/>
+                                 
+                                  <p:outputLabel value="Fecha:"/>
+                                  <p:calendar value="#{vueloClaseControl.vueloClase.fechaCreacion}" pattern="dd/MM/yyyy" locale="es" navigator="true" mask="true" yearRange="c:c+1"/>
+
+
+
+                               
+                                
+                            </p:panelGrid>
+                            <p:commandButton  value="Guardar" actionListener="#{vueloClaseControl.agregarVueloClase()}" update=":formListado:tablaVueloClases" oncomplete="PF('dialogoAgregar').hide();"/>
+                            <p:commandButton  value="Cancelar" onclick="PF('dialogoAgregar').hide();"/>
+                        </p:dialog>
+                    </h:form>
+
+                    <h:form id="formModificar">
+                        <p:dialog id="dlgModificar" header="Modificar VueloClase" widgetVar="dialogoModificar" resizable="false" showEffect="fade" hideEffect="explode" modal="true">
+                            <p:panelGrid columns="2" style="margin: 0 auto;">                                
+                             
+                                <p:outputLabel value="id vuelo:"/>
+                                <p:selectOneMenu value="#{vueloClaseControl.vueloClase.vuelo.idVuelo}">
+                                    <f:selectItem itemLabel="-- Seleccione -- "/>
+                                    <f:selectItems value="#{vueloClaseControl.listaVuelo}"/>
+                                </p:selectOneMenu>
+                                
+                                 <p:outputLabel value="Clase:"/>
+                                 <p:selectOneMenu value="#{vueloClaseControl.vueloClase.clase.idClase}">
+                                    <f:selectItem itemLabel="-- Seleccione -- "/>
+                                    <f:selectItems value="#{vueloClaseControl.listaClases}"/>
+                                </p:selectOneMenu>
+                                  <p:outputLabel value="Numero de asientos:"/>
+                                  <p:inputText value="#{vueloClaseControl.vueloClase.numeroAsientos}"/>
+                                  <p:outputLabel value="Precio:"/>
+                                  <p:inputText value="#{vueloClaseControl.vueloClase.precio}"/>
+                                  <p:outputLabel value="Precio comida:"/>
+                                  <p:inputText value="#{vueloClaseControl.vueloClase.precioComida}"/>
+                                 
+                                  <p:outputLabel value="Fecha:"/>
+                                  <p:calendar value="#{vueloClaseControl.vueloClase.fechaCreacion}" pattern="dd/MM/yyyy" locale="es" navigator="true" mask="true" yearRange="c:c+1"/>
+
+
+
+                            </p:panelGrid>
+                            <p:commandButton  value="Guardar" actionListener="#{vueloClaseControl.modificarVueloClase()}" update=":formListado:tablaVueloClases" oncomplete="PF('dialogoModificar').hide();"/>
+                            <p:commandButton  value="Cancelar" onclick="PF('dialogoModificar').hide();"/>
+                        </p:dialog>
+                    </h:form>
+
+                    <h:form id="formEliminar">
+                        <p:dialog id="dlgEliminar" header="Eliminar VueloClase" widgetVar="dialogoEliminar" resizable="false" showEffect="fade" hideEffect="explode" modal="true">
+                            <h:outputText value="Desea eliminar este registro?"/>
+                            <p:commandButton  value="Si" actionListener="#{vueloClaseControl.eliminarVueloClase()}" update=":formListado:tablaVueloClases" oncomplete="PF('dialogoEliminar').hide();"/>
+                            <p:commandButton  value="No" onclick="PF('dialogoEliminar').hide();"/>
+                        </p:dialog>
+                    </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
+

@@ -1,0 +1,136 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Vuelo</title>
+    </h:head>
+    <h:body>
+        <h3>LISTADO DE AEROLINEAS</h3>
+        <h:form>
+            <p:commandButton value="Agregar Vuelo" actionListener="#{vueloControl.limpiarVuelo()}" oncomplete="PF('dialogoAgregar').show();" update=":formAgregar"/>
+            <p:separator/>
+        </h:form>
+        <h:form id="formListado">
+            <p:dataTable id="tablaVuelos" paginator="true" paginatorPosition="bottom" rows="10" var="vuelo" value="#{vueloControl.listaVuelos}" emptyMessage="No existen vuelos">
+                <p:column headerText="ID" style="text-align: center"> 
+                    <h:outputText value="#{vuelo.idVuelo}" />
+                </p:column>
+                <p:column headerText="AEROLINEA">
+                    <h:outputText value="#{vuelo.aerolinea.nombre}" />
+                </p:column>
+                <p:column headerText="ORIGEN">
+                    <h:outputText value="#{vuelo.origen.pais}, #{vuelo.origen.ciudad}, #{vuelo.origen.aeropuerto}" />
+                </p:column>
+                <p:column headerText="DESTINO">
+                    <h:outputText value="#{vuelo.destino.pais}, #{vuelo.destino.ciudad}, #{vuelo.destino.aeropuerto}" />
+                </p:column>
+                <p:column headerText="ASIENTOS" style="text-align: center">
+                    <h:outputText value="#{vuelo.numeroAsientos}" />
+                </p:column>
+                <p:column headerText="PUERTA" style="text-align: center">
+                    <h:outputText value="#{vuelo.puerta}" />
+                </p:column>
+                <p:column headerText="FECHA" style="text-align: center">
+                    <h:outputText value="#{vuelo.fecha}">
+                        <f:convertDateTime pattern="dd/MM/yyyy" locale="ES"/>
+                    </h:outputText>                    
+                </p:column> 
+                <p:column headerText="HORA" style="text-align: center">
+                    <h:outputText value="#{vuelo.hora}">
+                        <f:convertDateTime pattern="hh:mm a" locale="ES" timeZone="America/El_Salvador"/>
+                    </h:outputText>
+                </p:column> 
+                <p:column headerText="MODIFICAR" style="text-align: center">
+                    <p:commandButton icon="ui-icon-pencil" title="Modificar" oncomplete="PF('dialogoModificar').show();" update=":formModificar">
+                        <f:setPropertyActionListener target="#{vueloControl.vuelo}" value="#{vuelo}"/>
+                    </p:commandButton>
+                </p:column>
+                <p:column headerText="ELIMINAR" style="text-align: center">
+                    <p:commandButton icon="ui-icon-trash" title="Eliminar" oncomplete="PF('dialogoEliminar').show();" update=":formEliminar">
+                        <f:setPropertyActionListener target="#{vueloControl.vuelo}" value="#{vuelo}"/>
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+
+        <h:form id="formAgregar">
+            <p:dialog id="dlgAgregar" header="Agregar Vuelo" widgetVar="dialogoAgregar" resizable="false" showEffect="fade" hideEffect="explode" modal="true">
+                <p:panelGrid columns="2" style="margin: 0 auto;">       
+                    <p:outputLabel value="Aerolinea:"/>
+                    <p:selectOneMenu value="#{vueloControl.vuelo.aerolinea.idAerolinea}">
+                        <f:selectItem itemLabel="-- Seleccione -- "/>
+                        <f:selectItems value="#{vueloControl.listaAerolineas}"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Origen:"/>
+                    <p:selectOneMenu value="#{vueloControl.vuelo.origen.idOrigen}">
+                        <f:selectItem itemLabel="-- Seleccione -- "/>
+                        <f:selectItems value="#{vueloControl.listaOrigenes}"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Destino:"/>
+                    <p:selectOneMenu value="#{vueloControl.vuelo.destino.idDestino}">
+                        <f:selectItem itemLabel="-- Seleccione -- "/>
+                        <f:selectItems value="#{vueloControl.listaDestinos}"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Asientos:"/>
+                    <p:inputText value="#{vueloControl.vuelo.numeroAsientos}"/>
+                    <p:outputLabel value="Puerta:"/>
+                    <p:inputText value="#{vueloControl.vuelo.puerta}"/>
+                    <p:outputLabel value="Fecha:"/>
+                    <p:calendar value="#{vueloControl.vuelo.fecha}" pattern="dd/MM/yyyy" locale="es" navigator="true" mask="true" yearRange="c:c+1"/>
+                    <p:outputLabel  value="Hora:" />
+                    <p:calendar  value="#{vueloControl.vuelo.hora}" pattern="hh:mm a" timeOnly="true"  />
+                </p:panelGrid>
+                <p:commandButton  value="Guardar" actionListener="#{vueloControl.agregarVuelo()}" update=":formListado:tablaVuelos" oncomplete="PF('dialogoAgregar').hide();"/>
+                <p:commandButton  value="Cancelar" onclick="PF('dialogoAgregar').hide();"/>
+            </p:dialog>
+        </h:form>
+
+        <h:form id="formModificar">
+            <p:dialog id="dlgModificar" header="Modificar Vuelo" widgetVar="dialogoModificar" resizable="false" showEffect="fade" hideEffect="explode" modal="true">
+                <p:panelGrid columns="2" style="margin: 0 auto;">       
+                    <p:outputLabel value="Aerolinea:"/>
+                    <p:selectOneMenu value="#{vueloControl.vuelo.aerolinea.idAerolinea}">
+                        <f:selectItem itemLabel="-- Seleccione -- "/>
+                        <f:selectItems value="#{vueloControl.listaAerolineas}"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Origen:"/>
+                    <p:selectOneMenu value="#{vueloControl.vuelo.origen.idOrigen}">
+                        <f:selectItem itemLabel="-- Seleccione -- "/>
+                        <f:selectItems value="#{vueloControl.listaOrigenes}"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Destino:"/>
+                    <p:selectOneMenu value="#{vueloControl.vuelo.destino.idDestino}">
+                        <f:selectItem itemLabel="-- Seleccione -- "/>
+                        <f:selectItems value="#{vueloControl.listaDestinos}"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Asientos:"/>
+                    <p:inputText value="#{vueloControl.vuelo.numeroAsientos}"/>
+                    <p:outputLabel value="Puerta:"/>
+                    <p:inputText value="#{vueloControl.vuelo.puerta}"/>
+                    <p:outputLabel value="Fecha:"/>
+                    <p:calendar value="#{vueloControl.vuelo.fecha}" pattern="dd/MM/yyyy" locale="es" navigator="true" mask="true" yearRange="c:c+1"/>
+                    <p:outputLabel  value="Hora:" />
+                    <p:calendar  value="#{vueloControl.vuelo.hora}" pattern="hh:mm a" timeOnly="true"  />
+                </p:panelGrid>
+                <p:commandButton  value="Guardar" actionListener="#{vueloControl.modificarVuelo()}" update=":formListado:tablaVuelos" oncomplete="PF('dialogoModificar').hide();"/>
+                <p:commandButton  value="Cancelar" onclick="PF('dialogoModificar').hide();"/>
+            </p:dialog>
+        </h:form>
+
+        <h:form id="formEliminar">
+            <p:dialog id="dlgEliminar" header="Eliminar Vuelo" widgetVar="dialogoEliminar" resizable="false" showEffect="fade" hideEffect="explode" modal="true">
+                <h:outputText value="Desea eliminar este registro?"/>
+                <p:commandButton  value="Si" actionListener="#{vueloControl.eliminarVuelo()}" update=":formListado:tablaVuelos" oncomplete="PF('dialogoEliminar').hide();"/>
+                <p:commandButton  value="No" onclick="PF('dialogoEliminar').hide();"/>
+            </p:dialog>
+        </h:form>
+    </h:body>
+</html>
+
+
+
+
+

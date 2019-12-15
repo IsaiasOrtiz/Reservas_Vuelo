@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 09-oct-2019 7:45:06 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="modelo.entidad.Usuario" table="usuario" catalog="reservas" optimistic-lock="version">
+        <id name="idUsuario" type="java.lang.Integer">
+            <column name="id_usuario" />
+            <generator class="identity" />
+        </id>
+        <property name="tipo" type="string">
+            <column name="tipo" length="20" />
+        </property>
+        <property name="nombreCompleto" type="string">
+            <column name="nombre_completo" length="100" />
+        </property>
+        <property name="usuario" type="string">
+            <column name="usuario" length="25" />
+        </property>
+        <property name="clave" type="string">
+            <column name="clave" length="100" />
+        </property>
+        <set name="reservas" table="reserva" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_usuario" />
+            </key>
+            <one-to-many class="modelo.entidad.Reserva" />
+        </set>
+    </class>
+</hibernate-mapping>

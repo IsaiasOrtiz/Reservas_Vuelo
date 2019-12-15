@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 09-oct-2019 7:45:06 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="modelo.entidad.Vuelo" table="vuelo" catalog="reservas" optimistic-lock="version">
+        <id name="idVuelo" type="java.lang.Integer">
+            <column name="id_vuelo" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="aerolinea" class="modelo.entidad.Aerolinea" fetch="select">
+            <column name="id_aerolinea" />
+        </many-to-one>
+        <many-to-one name="destino" class="modelo.entidad.Destino" fetch="select">
+            <column name="id_destino" />
+        </many-to-one>
+        <many-to-one name="origen" class="modelo.entidad.Origen" fetch="select">
+            <column name="id_origen" />
+        </many-to-one>
+        <property name="numeroAsientos" type="java.lang.Integer">
+            <column name="numero_asientos" />
+        </property>
+        <property name="puerta" type="java.lang.Integer">
+            <column name="puerta" />
+        </property>
+        <property name="fecha" type="date">
+            <column name="fecha" length="10" />
+        </property>
+        <property name="hora" type="time">
+            <column name="hora" length="8" />
+        </property>
+        <set name="vueloClases" table="vuelo_clase" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_vuelo" />
+            </key>
+            <one-to-many class="modelo.entidad.VueloClase" />
+        </set>
+    </class>
+</hibernate-mapping>

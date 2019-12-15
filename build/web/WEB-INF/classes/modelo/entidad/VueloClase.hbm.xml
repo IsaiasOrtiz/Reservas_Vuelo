@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 09-oct-2019 7:45:06 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="modelo.entidad.VueloClase" table="vuelo_clase" catalog="reservas" optimistic-lock="version">
+        <id name="idVueloClase" type="java.lang.Integer">
+            <column name="id_vuelo_clase" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="clase" class="modelo.entidad.Clase" fetch="select">
+            <column name="id_clase" />
+        </many-to-one>
+        <many-to-one name="vuelo" class="modelo.entidad.Vuelo" fetch="select">
+            <column name="id_vuelo" />
+        </many-to-one>
+        <property name="numeroAsientos" type="java.lang.Integer">
+            <column name="numero_asientos" />
+        </property>
+        <property name="precio" type="java.lang.Double">
+            <column name="precio" precision="6" />
+        </property>
+        <property name="precioComida" type="java.lang.Double">
+            <column name="precio_comida" precision="6" />
+        </property>
+        <property name="fechaCreacion" type="timestamp">
+            <column name="fecha_creacion" length="19" />
+        </property>
+        <set name="reservas" table="reserva" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_vuelo_clase" />
+            </key>
+            <one-to-many class="modelo.entidad.Reserva" />
+        </set>
+    </class>
+</hibernate-mapping>

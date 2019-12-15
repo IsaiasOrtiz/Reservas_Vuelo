@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 09-oct-2019 7:45:06 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="modelo.entidad.Reserva" table="reserva" catalog="reservas" optimistic-lock="version">
+        <id name="idReserva" type="java.lang.Integer">
+            <column name="id_reserva" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="cliente" class="modelo.entidad.Cliente" fetch="select">
+            <column name="id_cliente" />
+        </many-to-one>
+        <many-to-one name="usuario" class="modelo.entidad.Usuario" fetch="select">
+            <column name="id_usuario" />
+        </many-to-one>
+        <many-to-one name="vueloClase" class="modelo.entidad.VueloClase" fetch="select">
+            <column name="id_vuelo_clase" />
+        </many-to-one>
+        <property name="cantidadPersonas" type="java.lang.Integer">
+            <column name="cantidad_personas" />
+        </property>
+        <property name="formaPago" type="java.lang.Integer">
+            <column name="forma_pago" />
+        </property>
+        <property name="tipoReserva" type="string">
+            <column name="tipo_reserva" length="45" />
+        </property>
+        <property name="fechaCreacion" type="timestamp">
+            <column name="fecha_creacion" length="19" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="/css/default.css"/>
+        <h:outputStylesheet name="/css/cssLayout.css"/>
+        <title>Reservas</title>
+        <script>
+            PrimeFaces.locales['es'] = {
+                closeText: 'Cerrar',
+                prevText: 'Anterior',
+                nextText: 'Siguiente',
+                monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+                dayNamesMin: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
+                weekHeader: 'Semana',
+                firstDay: 1,
+                isRTL: false,
+                showMonthAfterYear: false,
+                yearSuffix: '',
+                timeOnlyTitle: 'Hora',
+                timeText: 'Tiempo',
+                hourText: 'Hora',
+                minuteText: 'Minuto',
+                secondText: 'Segundo',
+                currentText: 'Fecha actual',
+                ampm: false,
+                month: 'Mes',
+                week: 'Semana',
+                day: 'Día',
+                allDayText: 'Todo el día'
+            };
+        </script> 
+    </h:head>
+
+    <h:body>
+
+        <div id="top">
+            <ui:insert name="top"></ui:insert>
+            <h2>SISTEMA DE VUELOS.</h2>
+            <div id="sessionUsuario">
+                <span>
+                    <h:form>
+                        <p:outputLabel value="Usuario: " style="font-weight: bold"/>
+                        <p:outputLabel value="#{loginControl.usuario.nombreCompleto}"/>
+                    </h:form>
+                </span>                
+            </div>
+            <h:form>   
+                <p:menubar>
+                    <p:menuitem value="Inicio" outcome="/vista/inicio" icon="ui-icon-home" />
+
+                    <p:submenu label="Mantenimientos" icon="ui-icon-circle-plus">
+                        <p:menuitem value="Aerolinea" outcome="/vista/mantenimientos/aerolinea" icon="ui-icon-arrowreturnthick-1-w" />
+                        <p:menuitem value="Vuelo" outcome="/vista/mantenimientos/vuelo" icon="ui-icon-arrowreturnthick-1-w" />
+                        <p:menuitem value="Usuarios" outcome="/vista/mantenimientos/usuarios" icon="ui-icon-arrowreturnthick-1-w" />
+                        <p:menuitem value="Destinos" outcome="/vista/mantenimientos/destino" icon="ui-icon-arrowreturnthick-1-w" />
+                        <p:menuitem value="Origen" outcome="/vista/mantenimientos/origen" icon="ui-icon-arrowreturnthick-1-w" />
+                        <p:menuitem value="Clase" outcome="/vista/mantenimientos/clase" icon="ui-icon-arrowreturnthick-1-w" />
+                        <p:menuitem value="Cliente" outcome="/vista/mantenimientos/cliente" icon="ui-icon-arrowreturnthick-1-w" />
+                        <p:menuitem value="Vuelo Clase" outcome="/vista/mantenimientos/vueloClase" icon="ui-icon-arrowreturnthick-1-w" />
+                        <p:menuitem value="Reserva" outcome="/vista/mantenimientos/reserva" icon="ui-icon-arrowreturnthick-1-w" />
+                    </p:submenu>
+
+                    <p:submenu label="Reserva" icon="ui-icon-circle-plus">
+                        <p:menuitem value="Registro de alquileres" outcome="/vista/reserva/reserva" /> 
+                    </p:submenu>
+
+                    <p:submenu label="Reportes" icon="ui-icon-document">
+        
+                        <p:menuitem value="Listado de vuelos por fecha" outcome="/vista/reportes/vuelosfecha" /> 
+                         <p:menuitem value="Listado usuarios" outcome="/vista/reportes/usuarios" /> 
+                         <p:menuitem value="Listado vuelos" outcome="/vista/reportes/vuelos" /> 
+                           <p:menuitem value="Listado clases" outcome="/vista/reportes/clase" /> 
+                            <p:menuitem value="Listado Clientes" outcome="/vista/reportes/cliente" /> 
+                             <p:menuitem value="Listado Aerolinea" outcome="/vista/reportes/aerolinea" /> 
+                         
+
+                    </p:submenu>
+
+                    <p:menuitem value="Salir" icon="ui-icon-circle-minus" action="#{loginControl.cerrarSession()}"  />
+
+                </p:menubar>
+            </h:form>
+        </div>
+
+        <div id="content" class="center_content">
+            <ui:insert name="content">Content</ui:insert>
+        </div>
+
+        <div id="bottom">
+            <ui:insert name="bottom">Bottom</ui:insert>
+            UTEC 2019
+        </div>
+
+    </h:body>
+
+</html>
